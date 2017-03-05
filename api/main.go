@@ -3,11 +3,15 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 )
 
 func main() {
 	fmt.Println("shopping-manager api start")
+
+	serverRun()
+	fmt.Println("server start")
 }
 
 type Product struct {
@@ -24,4 +28,10 @@ func getProducts(responseWriter http.ResponseWriter, request *http.Request) {
 	}
 
 	json.NewEncoder(responseWriter).Encode(products)
+}
+
+func serverRun() {
+	http.HandleFunc("/api/product", getProducts)
+
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
