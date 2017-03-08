@@ -3,13 +3,15 @@ package main
 import (
 	"fmt"
 
-	"./product"
+	"./resources/product"
+	"./server"
 )
 
 func main() {
 	fmt.Println("shopping-manager api start")
 
 	resourceHandler()
+	server.Start()
 }
 
 // resourceHandler is unexported function

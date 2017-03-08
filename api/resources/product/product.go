@@ -4,31 +4,26 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
-	"log"
 	"net/http"
 	"os"
 	"strconv"
 
-	"../pkg/mux"
+	"../../pkg/mux"
+	"../../server"
 )
 
-// Declare unexported products array
 var products Products
 
 // Resource method show all endpoint in product package
 func Resource() {
-	router := mux.NewRouter()
-
 	products = productsDeserializer()
 
-	router.HandleFunc("/product", getProducts).Methods("GET")
-	router.HandleFunc("/product/{id}", getProduct).Methods("GET")
-
-	log.Fatal(http.ListenAndServe(":8080", router))
+	server.Router.HandleFunc("/product", getProducts).Methods("GET")
+	server.Router.HandleFunc("/product/{id}", getProduct).Methods("GET")
 }
 
 func productsDeserializer() Products {
-	raw, error := ioutil.ReadFile("./api/product/product.json")
+	raw, error := ioutil.ReadFile("./api/resources/product/product.json")
 
 	if error != nil {
 		fmt.Println(error.Error())
