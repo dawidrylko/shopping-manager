@@ -8,9 +8,21 @@ import (
 	"os"
 	"strconv"
 
+	mgo "gopkg.in/mgo.v2"
+	"gopkg.in/mgo.v2/bson"
+
 	"../../pkg/mux"
+
 	"../../server"
 )
+
+type ProductController struct {
+	session *mgo.Session
+}
+
+func NewProductController(session *mgo.Session) *ProductController {
+	return &ProductController{session}
+}
 
 var products Products
 
@@ -52,4 +64,26 @@ func getProduct(responseWriter http.ResponseWriter, request *http.Request) {
 	}
 
 	json.NewEncoder(responseWriter).Encode(&Product{})
+}
+
+func (productController ProductController) createProduct(responseWriter http.ResponseWriter, request *http.Request) {
+	// Stub an product to be populated from the body
+	product := Product{}
+
+	// Populate the product data
+	json.NewDecoder(request.Body).Decode(&product)
+
+	// Add an ID
+	product.ID = bson.NewObjectId()
+
+	// Write the user to mongo
+	productController.session.DB("shopping-manager").C("products").Insert(product)
+
+	// Marshal provided interface into JSON structure
+	productJSON, _ := json.Marshal(product)
+
+	// Write content-type, statuscode, payload
+	responseWriter.Header().Set("Content-Type", "application/json")
+	responseWriter.WriteHeader(201)
+	fmt.Fprintf(responseWriter, "%s", productJSON)
 }
