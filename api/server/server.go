@@ -1,6 +1,7 @@
 package server
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
@@ -17,7 +18,8 @@ func Start() {
 	log.Fatal(http.ListenAndServe(":8001", Router))
 }
 
-func getSession() *mgo.Session {
+func GetSession() *mgo.Session {
+	fmt.Println("get session")
 	session, error := mgo.Dial("mongodb://localhost")
 
 	if error != nil {

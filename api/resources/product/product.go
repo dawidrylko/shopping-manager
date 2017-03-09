@@ -6,12 +6,9 @@ import (
 	"io/ioutil"
 	"net/http"
 	"os"
-	"strconv"
 
 	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
-
-	"../../pkg/mux"
 
 	"../../server"
 )
@@ -30,8 +27,11 @@ var products Products
 func Resource() {
 	products = productsDeserializer()
 
+	pc := NewProductController(server.GetSession())
+
 	server.Router.HandleFunc("/product", getProducts).Methods("GET")
 	server.Router.HandleFunc("/product/{id}", getProduct).Methods("GET")
+	server.Router.HandleFunc("/product", pc.createProduct).Methods("POST")
 }
 
 func productsDeserializer() Products {
@@ -53,17 +53,17 @@ func getProducts(responseWriter http.ResponseWriter, request *http.Request) {
 }
 
 func getProduct(responseWriter http.ResponseWriter, request *http.Request) {
-	params := mux.Vars(request)
+	// params := mux.Vars(request)
 
-	for _, product := range products {
-		if strconv.Itoa(product.ID) == params["id"] {
-			json.NewEncoder(responseWriter).Encode(product)
+	// for _, product := range products {
+	// 	if product.ID == params["id"] {
+	// 		json.NewEncoder(responseWriter).Encode(product)
 
-			return
-		}
-	}
+	// 		return
+	// 	}
+	// }
 
-	json.NewEncoder(responseWriter).Encode(&Product{})
+	// json.NewEncoder(responseWriter).Encode(&Product{})
 }
 
 func (productController ProductController) createProduct(responseWriter http.ResponseWriter, request *http.Request) {
