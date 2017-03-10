@@ -4,9 +4,8 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/gorilla/mux"
 	"gopkg.in/mgo.v2"
-
-	"../pkg/mux"
 )
 
 // Router is mux NewRouter() handler
