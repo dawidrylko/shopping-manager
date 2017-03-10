@@ -31,7 +31,7 @@ func Resource() {
 
 	server.Router.HandleFunc("/product", getProducts).Methods("GET")
 	server.Router.HandleFunc("/product/{id}", getProduct).Methods("GET")
-	server.Router.HandleFunc("/product", pc.createProduct).Methods("POST")
+	server.Router.HandleFunc("/product", pc.create).Methods("POST")
 }
 
 func productsDeserializer() Products {
@@ -66,7 +66,7 @@ func getProduct(responseWriter http.ResponseWriter, request *http.Request) {
 	// json.NewEncoder(responseWriter).Encode(&Product{})
 }
 
-func (productController ProductController) createProduct(responseWriter http.ResponseWriter, request *http.Request) {
+func (productController ProductController) create(responseWriter http.ResponseWriter, request *http.Request) {
 	// Stub an product to be populated from the body
 	product := Product{}
 
@@ -85,5 +85,5 @@ func (productController ProductController) createProduct(responseWriter http.Res
 	// Write content-type, statuscode, payload
 	responseWriter.Header().Set("Content-Type", "application/json")
 	responseWriter.WriteHeader(201)
-	fmt.Fprintf(responseWriter, "%s", productJSON)
+	fmt.Fprintf(responseWriter, "%s", productJSON, "lalala")
 }
