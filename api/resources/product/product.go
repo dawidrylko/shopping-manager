@@ -3,13 +3,12 @@ package product
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"net/http"
-	"os"
 
 	mgo "gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 
+	"../../pkg/mux"
 	"../../server"
 )
 
@@ -25,45 +24,37 @@ var products Products
 
 // Resource method show all endpoint in product package
 func Resource() {
-	products = productsDeserializer()
-
 	pc := NewProductController(server.GetSession())
 
 	server.Router.HandleFunc("/product", getProducts).Methods("GET")
-	server.Router.HandleFunc("/product/{id}", getProduct).Methods("GET")
+	server.Router.HandleFunc("/product/{id}", pc.get).Methods("GET")
 	server.Router.HandleFunc("/product", pc.create).Methods("POST")
-}
-
-func productsDeserializer() Products {
-	raw, error := ioutil.ReadFile("./api/resources/product/product.json")
-
-	if error != nil {
-		fmt.Println(error.Error())
-		os.Exit(1)
-	}
-
-	var products Products
-	json.Unmarshal(raw, &products)
-
-	return products
 }
 
 func getProducts(responseWriter http.ResponseWriter, request *http.Request) {
 	json.NewEncoder(responseWriter).Encode(products)
 }
 
-func getProduct(responseWriter http.ResponseWriter, request *http.Request) {
-	// params := mux.Vars(request)
+func (productController ProductController) get(responseWriter http.ResponseWriter, request *http.Request) {
+	params := mux.Vars(request)
+	id := params["id"]
+	oid := bson.ObjectIdHex(id)
 
-	// for _, product := range products {
-	// 	if product.ID == params["id"] {
-	// 		json.NewEncoder(responseWriter).Encode(product)
+	product := Product{}
 
-	// 		return
-	// 	}
-	// }
+	// Fetch user
+	if err := productController.session.DB("shopping-manager").C("products").FindId(oid).One(&product); err != nil {
+		responseWriter.WriteHeader(404)
+		return
+	}
 
-	// json.NewEncoder(responseWriter).Encode(&Product{})
+	// Marshal provided interface into JSON structure
+	productJSON, _ := json.Marshal(product)
+
+	// Write content-type, statuscode, payload
+	responseWriter.Header().Set("Content-Type", "application/json")
+	responseWriter.WriteHeader(200)
+	fmt.Fprintf(responseWriter, "%s", productJSON)
 }
 
 func (productController ProductController) create(responseWriter http.ResponseWriter, request *http.Request) {
