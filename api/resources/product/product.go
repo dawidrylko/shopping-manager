@@ -26,13 +26,27 @@ var products Products
 func Resource() {
 	pc := NewProductController(server.GetSession())
 
-	server.Router.HandleFunc("/product", getProducts).Methods("GET")
+	server.Router.HandleFunc("/product", pc.getAll).Methods("GET")
 	server.Router.HandleFunc("/product/{id}", pc.get).Methods("GET")
 	server.Router.HandleFunc("/product", pc.create).Methods("POST")
 }
 
-func getProducts(responseWriter http.ResponseWriter, request *http.Request) {
-	json.NewEncoder(responseWriter).Encode(products)
+func (productController ProductController) getAll(responseWriter http.ResponseWriter, request *http.Request) {
+	products := Products{}
+
+	// Fetch user
+	if err := productController.session.DB("shopping-manager").C("products").Find(nil).All(&products); err != nil {
+		responseWriter.WriteHeader(404)
+		return
+	}
+
+	// Marshal provided interface into JSON structure
+	productsJSON, _ := json.Marshal(products)
+
+	// Write content-type, statuscode, payload
+	responseWriter.Header().Set("Content-Type", "application/json")
+	responseWriter.WriteHeader(200)
+	fmt.Fprintf(responseWriter, "%s", productsJSON)
 }
 
 func (productController ProductController) get(responseWriter http.ResponseWriter, request *http.Request) {
