@@ -10,12 +10,13 @@ import (
 func main() {
 	fmt.Println("shopping-manager api start")
 
-	resourceHandler()
+	loadResourceHandler()
+
 	server.Start()
 }
 
-// resourceHandler is unexported function
+// loadResourceHandler is unexported function
 // which includes all resources
-func resourceHandler() {
-	product.Resource()
+func loadResourceHandler() {
+	product.Handler()
 }
