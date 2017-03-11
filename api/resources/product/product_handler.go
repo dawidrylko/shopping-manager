@@ -19,6 +19,21 @@ func Handler() {
 	server.Router.HandleFunc("/product/{id}", get).Methods("GET")
 }
 
+func create(responseWriter http.ResponseWriter, request *http.Request) {
+	product := Product{}
+
+	json.NewDecoder(request.Body).Decode(&product)
+	product.ID = bson.NewObjectId()
+
+	server.GetSession().DB("shopping-manager").C("products").Insert(product)
+
+	responseWriter.Header().Set("Content-Type", "application/json")
+	responseWriter.WriteHeader(201)
+
+	productJSON, _ := json.Marshal(product)
+	fmt.Fprintf(responseWriter, "%s", productJSON)
+}
+
 func getAll(responseWriter http.ResponseWriter, request *http.Request) {
 	products := Products{}
 
@@ -48,21 +63,6 @@ func get(responseWriter http.ResponseWriter, request *http.Request) {
 
 	responseWriter.Header().Set("Content-Type", "application/json")
 	responseWriter.WriteHeader(200)
-
-	productJSON, _ := json.Marshal(product)
-	fmt.Fprintf(responseWriter, "%s", productJSON)
-}
-
-func create(responseWriter http.ResponseWriter, request *http.Request) {
-	product := Product{}
-
-	json.NewDecoder(request.Body).Decode(&product)
-	product.ID = bson.NewObjectId()
-
-	server.GetSession().DB("shopping-manager").C("products").Insert(product)
-
-	responseWriter.Header().Set("Content-Type", "application/json")
-	responseWriter.WriteHeader(201)
 
 	productJSON, _ := json.Marshal(product)
 	fmt.Fprintf(responseWriter, "%s", productJSON)
