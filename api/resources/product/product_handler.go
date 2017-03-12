@@ -29,10 +29,13 @@ func create(responseWriter http.ResponseWriter, request *http.Request) {
 	json.NewDecoder(request.Body).Decode(&product)
 	product.ID = bson.NewObjectId()
 
-	server.GetSession().DB("shopping-manager").C("products").Insert(product)
+	session := server.GetSession()
+
+	session.DB("shopping-manager").C("products").Insert(product)
 
 	responseWriter.Header().Set("Content-Type", "application/json")
 	responseWriter.WriteHeader(201)
+	server.FinishSession(session)
 
 	productJSON, _ := json.Marshal(product)
 	fmt.Fprintf(responseWriter, "%s", productJSON)
@@ -53,14 +56,18 @@ func update(responseWriter http.ResponseWriter, request *http.Request) {
 	product.ID = oid
 	json.NewDecoder(request.Body).Decode(&product)
 
-	if error := server.GetSession().DB("shopping-manager").C("products").UpdateId(oid, product); error != nil {
+	session := server.GetSession()
+
+	if error := session.DB("shopping-manager").C("products").UpdateId(oid, product); error != nil {
 		responseWriter.WriteHeader(404)
+		server.FinishSession(session)
 
 		return
 	}
 
 	responseWriter.Header().Set("Content-Type", "application/json")
 	responseWriter.WriteHeader(200)
+	server.FinishSession(session)
 
 	productJSON, _ := json.Marshal(product)
 	fmt.Fprintf(responseWriter, "%s", productJSON)
@@ -69,14 +76,18 @@ func update(responseWriter http.ResponseWriter, request *http.Request) {
 func getAll(responseWriter http.ResponseWriter, request *http.Request) {
 	products := Products{}
 
-	if error := server.GetSession().DB("shopping-manager").C("products").Find(nil).All(&products); error != nil {
+	session := server.GetSession()
+
+	if error := session.DB("shopping-manager").C("products").Find(nil).All(&products); error != nil {
 		responseWriter.WriteHeader(404)
+		server.FinishSession(session)
 
 		return
 	}
 
 	responseWriter.Header().Set("Content-Type", "application/json")
 	responseWriter.WriteHeader(200)
+	server.FinishSession(session)
 
 	productsJSON, _ := json.Marshal(products)
 	fmt.Fprintf(responseWriter, "%s", productsJSON)
@@ -87,14 +98,18 @@ func get(responseWriter http.ResponseWriter, request *http.Request) {
 	oid := bson.ObjectIdHex(params["id"])
 	product := Product{}
 
-	if error := server.GetSession().DB("shopping-manager").C("products").FindId(oid).One(&product); error != nil {
+	session := server.GetSession()
+
+	if error := session.DB("shopping-manager").C("products").FindId(oid).One(&product); error != nil {
 		responseWriter.WriteHeader(404)
+		server.FinishSession(session)
 
 		return
 	}
 
 	responseWriter.Header().Set("Content-Type", "application/json")
 	responseWriter.WriteHeader(200)
+	server.FinishSession(session)
 
 	productJSON, _ := json.Marshal(product)
 	fmt.Fprintf(responseWriter, "%s", productJSON)
@@ -111,11 +126,15 @@ func remove(responseWriter http.ResponseWriter, request *http.Request) {
 
 	oid := bson.ObjectIdHex(params["id"])
 
-	if error := server.GetSession().DB("shopping-manager").C("products").RemoveId(oid); error != nil {
+	session := server.GetSession()
+
+	if error := session.DB("shopping-manager").C("products").RemoveId(oid); error != nil {
 		responseWriter.WriteHeader(404)
+		server.FinishSession(session)
 
 		return
 	}
 
 	responseWriter.WriteHeader(200)
+	server.FinishSession(session)
 }

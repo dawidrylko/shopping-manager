@@ -31,4 +31,9 @@ func GetSession() *mgo.Session {
 	return session
 }
 
-// TODO: end session
+// FinishSession method finish session with MongoDB
+func FinishSession(session *mgo.Session) {
+	fmt.Println("finish session")
+
+	session.Close()
+}
