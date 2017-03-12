@@ -3,6 +3,7 @@ package server
 import (
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/gorilla/mux"
 	"gopkg.in/mgo.v2"
@@ -13,14 +14,14 @@ var Router = mux.NewRouter()
 
 // Start server
 func Start() {
-	fmt.Println("server start")
+	fmt.Println(time.Now(), "Go HTTP server start")
 
 	http.ListenAndServe(":8001", Router)
 }
 
 // GetSession method start session with MongoDB
 func GetSession() *mgo.Session {
-	fmt.Println("get session")
+	fmt.Println(time.Now(), "Connect with MongoDB")
 
 	session, error := mgo.Dial("mongodb://localhost")
 
@@ -33,7 +34,7 @@ func GetSession() *mgo.Session {
 
 // FinishSession method finish session with MongoDB
 func FinishSession(session *mgo.Session) {
-	fmt.Println("finish session")
+	fmt.Println(time.Now(), "Disconnect with MongoDB")
 
 	session.Close()
 }

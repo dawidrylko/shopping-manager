@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/gorilla/mux"
 	"gopkg.in/mgo.v2/bson"
@@ -24,6 +25,8 @@ func Handler() {
 }
 
 func create(responseWriter http.ResponseWriter, request *http.Request) {
+	fmt.Println(time.Now(), "Create product")
+
 	product := Product{}
 
 	json.NewDecoder(request.Body).Decode(&product)
@@ -42,6 +45,8 @@ func create(responseWriter http.ResponseWriter, request *http.Request) {
 }
 
 func update(responseWriter http.ResponseWriter, request *http.Request) {
+	fmt.Println(time.Now(), "Update product")
+
 	params := mux.Vars(request)
 
 	if !bson.IsObjectIdHex(params["id"]) {
@@ -74,6 +79,8 @@ func update(responseWriter http.ResponseWriter, request *http.Request) {
 }
 
 func getAll(responseWriter http.ResponseWriter, request *http.Request) {
+	fmt.Println(time.Now(), "Get products list")
+
 	products := Products{}
 
 	session := server.GetSession()
@@ -94,6 +101,8 @@ func getAll(responseWriter http.ResponseWriter, request *http.Request) {
 }
 
 func get(responseWriter http.ResponseWriter, request *http.Request) {
+	fmt.Println(time.Now(), "Get product")
+
 	params := mux.Vars(request)
 	oid := bson.ObjectIdHex(params["id"])
 	product := Product{}
@@ -116,6 +125,8 @@ func get(responseWriter http.ResponseWriter, request *http.Request) {
 }
 
 func remove(responseWriter http.ResponseWriter, request *http.Request) {
+	fmt.Println(time.Now(), "Remove product")
+
 	params := mux.Vars(request)
 
 	if !bson.IsObjectIdHex(params["id"]) {
