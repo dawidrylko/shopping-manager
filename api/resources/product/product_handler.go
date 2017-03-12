@@ -17,6 +17,8 @@ func Handler() {
 
 	server.Router.HandleFunc("/product", getAll).Methods("GET")
 	server.Router.HandleFunc("/product/{id}", get).Methods("GET")
+
+	server.Router.HandleFunc("/product/{id}", remove).Methods("DELETE")
 }
 
 func create(responseWriter http.ResponseWriter, request *http.Request) {
@@ -66,4 +68,24 @@ func get(responseWriter http.ResponseWriter, request *http.Request) {
 
 	productJSON, _ := json.Marshal(product)
 	fmt.Fprintf(responseWriter, "%s", productJSON)
+}
+
+func remove(responseWriter http.ResponseWriter, request *http.Request) {
+	params := mux.Vars(request)
+
+	if !bson.IsObjectIdHex(params["id"]) {
+		responseWriter.WriteHeader(404)
+
+		return
+	}
+
+	oid := bson.ObjectIdHex(params["id"])
+
+	if error := server.GetSession().DB("shopping-manager").C("products").RemoveId(oid); error != nil {
+		responseWriter.WriteHeader(404)
+
+		return
+	}
+
+	responseWriter.WriteHeader(200)
 }
