@@ -15,6 +15,8 @@ import (
 func Handler() {
 	server.Router.HandleFunc("/product", create).Methods("POST")
 
+	server.Router.HandleFunc("/product/{id}", update).Methods("PUT")
+
 	server.Router.HandleFunc("/product", getAll).Methods("GET")
 	server.Router.HandleFunc("/product/{id}", get).Methods("GET")
 
@@ -31,6 +33,34 @@ func create(responseWriter http.ResponseWriter, request *http.Request) {
 
 	responseWriter.Header().Set("Content-Type", "application/json")
 	responseWriter.WriteHeader(201)
+
+	productJSON, _ := json.Marshal(product)
+	fmt.Fprintf(responseWriter, "%s", productJSON)
+}
+
+func update(responseWriter http.ResponseWriter, request *http.Request) {
+	params := mux.Vars(request)
+
+	if !bson.IsObjectIdHex(params["id"]) {
+		responseWriter.WriteHeader(404)
+
+		return
+	}
+
+	oid := bson.ObjectIdHex(params["id"])
+
+	product := Product{}
+	product.ID = oid
+	json.NewDecoder(request.Body).Decode(&product)
+
+	if error := server.GetSession().DB("shopping-manager").C("products").UpdateId(oid, product); error != nil {
+		responseWriter.WriteHeader(404)
+
+		return
+	}
+
+	responseWriter.Header().Set("Content-Type", "application/json")
+	responseWriter.WriteHeader(200)
 
 	productJSON, _ := json.Marshal(product)
 	fmt.Fprintf(responseWriter, "%s", productJSON)
