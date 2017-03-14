@@ -42,6 +42,10 @@ http://localhost:8001
 http://localhost:4200
 ```
 
+Running unit tests: `ng test` via [Karma]
+
+Running end-to-end tests: `ng e2e` via [Protractor]
+
 ***
 
 ## Endpoints list
