@@ -13,12 +13,38 @@ A web aplication supporting concious shopping. The aplication take part in the c
 - [MongoDB](https://www.mongodb.com/)
 
 ### Frontend
+- [Angular2](https://angular.io/)
+- [Angular CLI](https://cli.angular.io/)
 
 ***
 
-## Api
+## Running
 
-### Endpoints list
+### Database
+
+TODO
+
+### Backend
+- Open backend directory `cd api`
+- Run go server `go run main.go`
+
+#### The server is running:
+```
+http://localhost:8001
+```
+
+### Frontend
+- Open frontend directory `cd web`
+- Run web aplication `ng serve`
+
+#### The application is running:
+```
+http://localhost:4200
+```
+
+***
+
+## Endpoints list
 
 #### Product
 
