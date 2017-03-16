@@ -2,20 +2,32 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
-import { ProductComponent } from './product/product.component';
 
-import { RouterModule, Routes } from '@angular/router';
+import { ProductComponent } from './product/product.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const appRoutes: Routes = [
-  { 
-    path: 'product', 
-    component: ProductComponent 
+  { path: '',
+    redirectTo: '/dashboard',
+    pathMatch: 'full'
   },
-  { 
-    path: '**', 
+  { path: 'dashboard',
+    component: DashboardComponent,
+    data: { title: 'Dashboard' }
+  },
+  { path: 'product-list',
+    component: DashboardComponent,
+    data: { title: 'Product list' }
+  },
+  { path: 'product/:id', 
+    component: ProductComponent,
+    data: { title: 'Product' }
+  },
+  { path: '**', 
     component: PageNotFoundComponent 
   }
 ];
@@ -24,9 +36,11 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     ProductComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    DashboardComponent
   ],
   imports: [
+    RouterModule.forRoot(appRoutes),
     BrowserModule,
     FormsModule,
     HttpModule
