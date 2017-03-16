@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { ProductComponent } from './product/product.component';
 
 import { RouterModule, Routes } from '@angular/router';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 const appRoutes: Routes = [
   { 
@@ -22,7 +23,8 @@ const appRoutes: Routes = [
 @NgModule({
   declarations: [
     AppComponent,
-    ProductComponent
+    ProductComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
