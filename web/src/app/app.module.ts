@@ -6,9 +6,10 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
 
-import { ProductComponent } from './product/product.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { ProductListComponent } from './product-list/product-list.component';
+import { ProductComponent } from './product/product.component';
 
 const appRoutes: Routes = [
   { path: '',
@@ -37,7 +38,8 @@ const appRoutes: Routes = [
     AppComponent,
     ProductComponent,
     PageNotFoundComponent,
-    DashboardComponent
+    DashboardComponent,
+    ProductListComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
