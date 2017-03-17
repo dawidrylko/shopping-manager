@@ -23,7 +23,7 @@ const appRoutes: Routes = [
     data: { title: 'Dashboard' }
   },
   { path: 'product-list',
-    component: DashboardComponent,
+    component: ProductListComponent,
     data: { title: 'Product list' }
   },
   { path: 'product/:id', 
