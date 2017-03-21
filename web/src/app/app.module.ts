@@ -13,6 +13,8 @@ import { ProductListComponent } from './product-list/product-list.component';
 import { ProductComponent } from './product/product.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 
+import { IfRoleDirective } from './utility/if-role.directive';
+
 const appRoutes: Routes = [
   { path: '',
     redirectTo: '/dashboard',
@@ -42,7 +44,8 @@ const appRoutes: Routes = [
     PageNotFoundComponent,
     DashboardComponent,
     ProductListComponent,
-    SidebarComponent
+    SidebarComponent,
+    IfRoleDirective
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
