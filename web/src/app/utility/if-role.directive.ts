@@ -16,6 +16,7 @@ export class IfRoleDirective implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.updateViewVisibility();
   }
 
   private updateViewVisibility(): void {
