@@ -22,9 +22,9 @@ export class IfRoleDirective implements OnInit {
   private updateViewVisibility(): void {
     let isRole = !!this.roles.length;
 
-    if (isRole) {
+    if (isRole && this.hasView) {
       this.viewContainerRef.createEmbeddedView(this.templateRef);
-    } else {
+    } else if (!isRole && this.hasView) {
       this.viewContainerRef.clear();
     }
 
