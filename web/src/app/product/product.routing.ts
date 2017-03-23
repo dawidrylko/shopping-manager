@@ -1,15 +1,14 @@
 import { RouterModule, Routes } from '@angular/router'
+
 import { ProductListComponent } from './product-list/product-list.component'
 
 const routes: Routes = [
   { path: 'product',
-    redirectTo: '',
 
     children: [
-      {
-        path: 'list',
+      { path: 'list',
         component: ProductListComponent,
-        data: { title: 'Lista produktów' },
+        data: { title: 'Lista produktów' }
       }
     ]
   }

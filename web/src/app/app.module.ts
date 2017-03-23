@@ -7,30 +7,28 @@ import { MaterialModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 
+import { PageModule } from './page/page.module';
 import { ProductModule } from './product/product.module';
 
-const appRoutes: Routes = [
-  { path: '',
-    redirectTo: '/dashboard',
-    pathMatch: 'full'
-  },
-  // { path: '**', 
-  //   component: PageNotFoundComponent 
-  // }
-];
+import { SidebarComponent } from './sidebar/sidebar.component';
+
+import { AppRoutes } from './app.routing'
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SidebarComponent
   ],
   imports: [
-    RouterModule.forRoot(appRoutes),
-    MaterialModule.forRoot(),
     BrowserModule,
     FormsModule,
     HttpModule,
-    ProductModule
+    MaterialModule.forRoot(),
 
+    PageModule,
+    ProductModule,
+    
+    AppRoutes
   ],
   providers: [],
   bootstrap: [AppComponent]
