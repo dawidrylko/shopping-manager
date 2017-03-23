@@ -7,43 +7,30 @@ import { MaterialModule } from '@angular/material';
 
 import { AppComponent } from './app.component';
 
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { SidebarComponent } from './sidebar/sidebar.component';
+import { ProductModule } from './product/product.module';
 
 const appRoutes: Routes = [
   { path: '',
     redirectTo: '/dashboard',
     pathMatch: 'full'
   },
-  { path: 'dashboard',
-    component: DashboardComponent,
-    data: { title: 'Dashboard' }
-  },
-  { path: 'product-list',
-    data: { title: 'Product list' }
-  },
-  { path: 'product/:id', 
-    data: { title: 'Product' }
-  },
-  { path: '**', 
-    component: PageNotFoundComponent 
-  }
+  // { path: '**', 
+  //   component: PageNotFoundComponent 
+  // }
 ];
 
 @NgModule({
   declarations: [
-    AppComponent,
-    PageNotFoundComponent,
-    DashboardComponent,
-    SidebarComponent
+    AppComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
+    MaterialModule.forRoot(),
     BrowserModule,
     FormsModule,
     HttpModule,
-    MaterialModule.forRoot()
+    ProductModule
+
   ],
   providers: [],
   bootstrap: [AppComponent]
