@@ -93,6 +93,7 @@ func getAll(responseWriter http.ResponseWriter, request *http.Request) {
 	}
 
 	responseWriter.Header().Set("Content-Type", "application/json")
+	responseWriter.Header().Set("Access-Control-Allow-Origin", "*")
 	responseWriter.WriteHeader(200)
 	server.FinishSession(session)
 
