@@ -1,10 +1,15 @@
 package menu
 
-import "gopkg.in/mgo.v2/bson"
-import "time"
+import (
+	"time"
+
+	"gopkg.in/mgo.v2/bson"
+
+	"../recipe"
+)
 
 type Menu struct {
 	ID      bson.ObjectId  `json:"id" bson:"_id"`
-	date    time.Time      `json:"date"`
-	recipes recipe.Recipes `json:"recipe.Recipes"`
+	Date    time.Time      `json:"date"`
+	Recipes recipe.Recipes `json:"recipes"`
 }
