@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-product-form',
@@ -6,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./product-form.component.scss']
 })
 export class ProductFormComponent implements OnInit {
+  name = new FormControl();
 
   constructor() { }
 
