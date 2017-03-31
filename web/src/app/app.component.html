@@ -1,13 +1,3 @@
-<md-sidenav-container>
-  <md-sidenav #sidenav>
-    <app-sidebar></app-sidebar>
-  </md-sidenav>
-  <div>
-    <button md-button (click)="sidenav.open()">
-      <!-- TODO: icon -->
-      >> Open sidenav <<
-    </button>
-  </div>
-  
-  <router-outlet></router-outlet>
-</md-sidenav-container>
+<app-sidebar></app-sidebar>
+
+<router-outlet></router-outlet>
