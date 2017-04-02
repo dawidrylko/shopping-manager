@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import { ProductService } from './../product.service'
 import { Product } from './../product.model'
 
 @Component({
@@ -11,12 +13,13 @@ export class ProductFormComponent implements OnInit {
   public product: FormGroup;
 
   constructor(
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private productService: ProductService
   ) { }
 
   ngOnInit() {
     this.product = this.formBuilder.group({
-      name: ['Kolanka ozdobne Nr 33 Makaron Lubella'],
+      name: ['Kolanka ozdobne Nr 33 Makaron Lubella', [Validators.required, Validators.minLength(2)]],
       ean: ['5900049003060'],
       manufacturer: ['Lubella'],
       energy: ['351'],
