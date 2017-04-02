@@ -19,7 +19,7 @@ export class ProductFormComponent implements OnInit {
 
   ngOnInit() {
     this.product = this.formBuilder.group({
-      name: ['Kolanka ozdobne Nr 33 Makaron Lubella', [Validators.required, Validators.minLength(2)]],
+      name: ['Kolanka ozdobne Nr 33 Makaron Lubella', [Validators.required, Validators.minLength(3)]],
       ean: ['5900049003060'],
       manufacturer: ['Lubella'],
       energy: ['351'],
@@ -29,10 +29,7 @@ export class ProductFormComponent implements OnInit {
     });
   }
 
-  onSubmit({
-    value,
-    valid
-  }) {
+  public onSubmit({ value, valid }) {
     console.log('value', value);
     console.log('valid', valid);
   }
