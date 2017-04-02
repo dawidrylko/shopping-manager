@@ -1,9 +1,22 @@
-<h2>Create product</h2>
+<h2>Create new product</h2>
 
-<label class="center-block">
-  Name:
-  <input 
-    class="form-control" 
-    [formControl]="name"
-    >
-</label>
+<form novalidate 
+  (ngSubmit)="onSubmit(product)" 
+  [formGroup]="product"
+  class="form-group">
+
+  <label class="center-block">
+    <span>Name</span>
+    <input type="text" 
+      placeholder="np sałata lodowa" 
+      formControlName="name"
+      class="form-control">
+  </label>
+
+  <button type="submit"
+    [disabled]="product.invalid"
+    class="btn btn-primary">
+    Create
+  </button>
+
+</form>

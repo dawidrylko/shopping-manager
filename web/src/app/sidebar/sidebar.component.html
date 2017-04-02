@@ -1,17 +1,10 @@
-<div color="accent">
-  
-  <h1>Hello, Dawid</h1>
-  
-</div>
-  
-<a routerLink="/dashboard" 
-  routerLinkActive="active"
->
-  Dashboard
-</a>
+<h1>Hello, Dawid</h1>
 
-<a routerLink="/product/list" 
-  routerLinkActive="active"
->
-  Products
-</a>
+<ul class="list-group">
+  <li class="list-group-item"
+    routerLink="/dashboard" 
+    routerLinkActive="active">Dashboard</li>
+  <li class="list-group-item"
+    routerLink="/product/list" 
+    routerLinkActive="active">Products</li>
+</ul>

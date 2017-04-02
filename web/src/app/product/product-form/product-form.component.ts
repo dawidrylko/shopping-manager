@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Product } from './../product.model'
 
 @Component({
   selector: 'app-product-form',
@@ -7,11 +8,16 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./product-form.component.scss']
 })
 export class ProductFormComponent implements OnInit {
-  name = new FormControl();
+  public product: FormGroup;
 
-  constructor() { }
+  constructor(
+    private formBuilder: FormBuilder
+  ) { }
 
   ngOnInit() {
+    this.product = this.formBuilder.group({
+      name: ['']
+    });
   }
 
 }
