@@ -18,17 +18,11 @@ var Router = mux.NewRouter()
 func Start() {
 	fmt.Println(time.Now(), "Go HTTP server start")
 
-	headers := handlers.AllowedHeaders([]string{"Content-Type"})
-	originsOk := handlers.AllowedOrigins([]string{"*"})
-	methodsOk := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS"})
-	// ignoreOptions := handlers.IgnoreOptions()
+	alowedHeaders := handlers.AllowedHeaders([]string{"Content-Type"})
+	allowedOrigins := handlers.AllowedOrigins([]string{"*"})
+	allowedMethods := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS"})
 
-	// start server listen
-	// with error handling
-	log.Fatal(http.ListenAndServe(":8001", handlers.CORS(headers, originsOk, methodsOk)(Router)))
-
-	// allowedOrigins := handlers.AllowedOrigins([]string{"http://localhost:4200"})
-	// http.ListenAndServe(":8001", handlers.CORS(allowedOrigins)(Router))
+	log.Fatal(http.ListenAndServe(":8001", handlers.CORS(alowedHeaders, allowedOrigins, allowedMethods)(Router)))
 }
 
 // GetSession method start session with MongoDB
