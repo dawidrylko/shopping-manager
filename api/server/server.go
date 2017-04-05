@@ -2,9 +2,11 @@ package server
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"time"
 
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 	"gopkg.in/mgo.v2"
 )
@@ -16,7 +18,17 @@ var Router = mux.NewRouter()
 func Start() {
 	fmt.Println(time.Now(), "Go HTTP server start")
 
-	http.ListenAndServe(":8001", Router)
+	headers := handlers.AllowedHeaders([]string{"Content-Type"})
+	originsOk := handlers.AllowedOrigins([]string{"*"})
+	methodsOk := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS"})
+	// ignoreOptions := handlers.IgnoreOptions()
+
+	// start server listen
+	// with error handling
+	log.Fatal(http.ListenAndServe(":8001", handlers.CORS(headers, originsOk, methodsOk)(Router)))
+
+	// allowedOrigins := handlers.AllowedOrigins([]string{"http://localhost:4200"})
+	// http.ListenAndServe(":8001", handlers.CORS(allowedOrigins)(Router))
 }
 
 // GetSession method start session with MongoDB
