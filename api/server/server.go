@@ -20,9 +20,8 @@ func Start() {
 
 	alowedHeaders := handlers.AllowedHeaders([]string{"Content-Type"})
 	allowedOrigins := handlers.AllowedOrigins([]string{"*"})
-	allowedMethods := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "OPTIONS"})
 
-	log.Fatal(http.ListenAndServe(":8001", handlers.CORS(alowedHeaders, allowedOrigins, allowedMethods)(Router)))
+	log.Fatal(http.ListenAndServe(":8001", handlers.CORS(alowedHeaders, allowedOrigins)(Router)))
 }
 
 // GetSession method start session with MongoDB
