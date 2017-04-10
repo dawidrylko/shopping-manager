@@ -34,7 +34,12 @@ func create(responseWriter http.ResponseWriter, request *http.Request) {
 
 	session := server.GetSession()
 
-	session.DB("shopping-manager").C("products").Insert(product)
+	if error := session.DB("shopping-manager").C("products").Insert(product); error != nil {
+		responseWriter.WriteHeader(404)
+		server.FinishSession(session)
+
+		return
+	}
 
 	responseWriter.Header().Set("Content-Type", "application/json")
 	responseWriter.WriteHeader(201)
