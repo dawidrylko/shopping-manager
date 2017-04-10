@@ -29,19 +29,20 @@ export class ProductFormComponent implements OnInit {
     });
   }
 
-  private heroes = [];
-  private errorMessage;
-
-  public onSubmit({ value, valid }): void {
+  onSubmit({ value, valid }): void {
     if (!valid) {
       return;
     }
 
     this.productService.create(value)
-                     .subscribe(
-                       hero  => this.heroes.push(hero),
-                       error =>  this.errorMessage = <any>error);
-
+      .subscribe(
+        (product: Product)  => {
+          console.info(product);
+        },
+        (error: Error) =>  {
+          console.error(error);
+        }
+      );
   }
 
 }

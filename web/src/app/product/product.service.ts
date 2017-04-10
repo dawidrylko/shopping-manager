@@ -18,19 +18,14 @@ export class ProductService {
   ) { }
 
   public create(product: Product){
-    let headers = new Headers(
-      { 
-        'Content-Type': 'application/json'
-      }
-    );
+    let headers = new Headers({ 'Content-Type': 'application/json'});
     let options = new RequestOptions({ headers: headers });
-    console.log('options', options)
 
     return this.http.post(this.createUrl, product, options)
       .map((response: Response) => {
-        console.log(response);
-        let body = response.json();
-    return body.data || { };
+        let product = response.json();
+        
+        return product || { };
       })
       .catch(this.handleError);
   }
