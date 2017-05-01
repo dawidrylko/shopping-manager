@@ -8,9 +8,11 @@ A web aplication supporting concious shopping. The aplication take part in the c
 
 ## Technology
 
+### Database
+- [MongoDB](https://www.mongodb.com/)
+
 ### Backend
 - [Go Programming Language](https://golang.org/)
-- [MongoDB](https://www.mongodb.com/)
 
 ### Frontend
 - [Angular2](https://angular.io/)
@@ -18,7 +20,7 @@ A web aplication supporting concious shopping. The aplication take part in the c
 
 ***
 
-## Running
+## Instalation and running
 
 ### Database
 
@@ -29,15 +31,18 @@ TODO
 - Run go server `go run main.go`
 
 #### The server is running:
+
 ```
 http://localhost:8001
 ```
 
 ### Frontend
 - Open frontend directory `cd web`
-- Run web aplication `ng serve`
+- Before first runtime use `npm install`
+- Run web aplication `ng serve` or simple `ng s`
 
 #### The application is running:
+
 ```
 http://localhost:4200
 ```
