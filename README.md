@@ -62,3 +62,7 @@ Running end-to-end tests: `ng e2e` via [Protractor]
 - `GET` `/product` Get products list
 - `GET` `/product/{id}` Get product by id
 - `DELETE` `/product/{id}` Delete product
+
+***
+
+Created by [Dawid Ryłko](https://www.linkedin.com/in/dawidrylko/). Check out my [programming blog](https://www.dawidrylko.com/).
